@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Function to factorize a number
+factorize() {
+    local num=$1
+    for ((i = 2; i <= num / 2; ++i)); do
+        if ((num % i == 0)); then
+            echo "$num=$i*$(($num / $i))"
+            return
+        fi
+    done
+    # If the number is prime
+    echo "$num=$num*1"
+}
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <file>"
+    exit 1
+fi
+
+file="$1"
+
+while read -r num; do
+    factorize "$num"
+done < "$file"
